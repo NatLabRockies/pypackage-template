@@ -14,4 +14,4 @@ directorate at the `National Renewable Energy Laboratory (NREL)`.
 
 ## Acknowledgements
 
-* 
+*
