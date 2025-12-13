@@ -79,7 +79,7 @@ use_pre_commit:
     type: bool
     default: true
     help: Do you want to use pre-commit for code formatting and linting?
-include_checklist
+include_checklist:
     type: bool
     default: true
     help: Do you want to include a checklist file to help guide you to finish setting up the repository?
