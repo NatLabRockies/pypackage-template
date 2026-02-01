@@ -58,6 +58,7 @@ extensions = [
     "sphinx_click.ext",
     "sphinx_tabs.tabs",
     "sphinx_copybutton",
+    "sphinxcontrib.bibtex",
     "myst_parser",
 ]
 
@@ -284,6 +285,10 @@ autoclass_content = "both"  # Add __init__ doc (ie. params) to class summaries
 autodoc_member_order = "bysource"
 autodoc_inherit_docstrings = True  # If no docstring, inherit from base class
 add_module_names = False  # Remove namespaces from class/method signatures
+
+# Specify your BibTeX file(s)
+bibtex_bibfiles = ['references.bib']
+
 # Remove 'view source code' from top of page (for html, not python)
 html_show_sourcelink = False
 mermaid_version = "11.6.0"
