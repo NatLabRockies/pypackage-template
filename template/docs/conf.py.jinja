@@ -7,6 +7,8 @@
 # full list see the documentation:
 # http://www.sphinx-doc.org/en/stable/config
 
+from importlib.metadata import version as get_version
+
 # -- Path setup --------------------------------------------------------------
 
 # If extensions (or modules to document with autodoc) are in another directory,
@@ -28,12 +30,10 @@ pkg = os.path.dirname(os.path.abspath(os.path.dirname(__file__)))
 pkg = os.path.dirname(pkg)
 sys.path.append(pkg)
 
-from {{ project_slug }}._version import __version_tuple__ as v
-
-# The short X.Y version
-version = ".".join([str(num) for num in v[:3]])
 # The full version, including alpha/beta/rc tags
-release = version
+release = get_version("{{ project_slug }}").split("+")[0]
+# The short X.Y version
+version = ".".join(release.split(".")[:2])
 
 # -- General configuration ---------------------------------------------------
 
