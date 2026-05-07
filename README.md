@@ -1,7 +1,7 @@
-# Template for NREL's Python packages
+# Template for NLR's Python packages
 
-This is an opinionated template for creating Python packages at NREL,
-intended for a wide range of users. If you are new to NREL or don't have
+This is an opinionated template for creating Python packages at NLR,
+intended for a wide range of users. If you are new to NLR or don't have
 much experience building Python packages, this template is a good option
 to provide you a scaffolding to get started quickly. It also sets up several
 support tools for you, such as automated checks on your code, automatic
@@ -22,7 +22,6 @@ destination. You can install `copier` in several ways, depending on your
 environment and preferences. Here are some common methods, please choose one
 that suits you best:
 
-
 #### Homebrew (OSX)
 
 If you are on OSX and have [Homebrew](https://brew.sh/), you can install
@@ -37,13 +36,15 @@ brew install copier
 Install [Pixi](https://pixi.sh/latest/#installation) and:
 
 - Clone this repository and activate it's environment:
+
   ```bash
-  git clone https://github.com/castelao/NREL-pypackage-template.git
-  cd NREL-pypackage-template
+  git clone https://github.com/NatLabRockies/pypackage-template.git
+  cd pypackage-template
   pixi shell
   ```
 
 - Or create your own environment:
+
   ```bash
   pixi init my_project_creator
   pixi add copier
@@ -81,7 +82,7 @@ nix profile install 'https://flakehub.com/f/copier-org/copier/*.tar.gz'
 ### 2) Build your package
 
 ```bash
-copier copy https://github.com/castelao/NREL-pypackage-template ../my_new_project
+copier copy https://github.com/NatLabRockies/pypackage-template ../my_new_project
 cd ../my_new_project
 ```
 
@@ -92,11 +93,12 @@ If you've made changes to the template repository and would like to test them ou
 you can do so by adding `--vcs-ref HEAD` to the `copy` command:
 
 ```bash
-copier copy --vcs-ref HEAD ./NREL-pypackage-template ../my_new_project
+copier copy --vcs-ref HEAD ./pypackage-template ../my_new_project
 cd ../my_new_project
 ```
 
 ### 3) Test your build
+
 Once your project structure has been built, you can make sure everything works as intended
 by running the tests:
 
@@ -107,13 +109,16 @@ pixi run tests
 If this command succeeds, your repository has successfully been set up from the template.
 
 ### 4) Add more dependencies
+
 Now you are ready to continue to customize your repository!
 For instance, take a look at the `pyproject.toml` file.
 Your package will probably depend on other libraries. Let's assume that
 you'll use `xarray`, so you can run
+
 ```bash
 pixi add xarray
 ```
+
 which will update the `pyproject.toml` and `pixi.lock` files with the new
 dependency.
 
