@@ -1,9 +1,9 @@
 [build-system]
 requires = [
-  "setuptools >= 80",
-  "setuptools_scm[toml] >= 8",
+  "hatchling >= 1.27",
+  "hatch-vcs >= 0.5",
 ]
-build-backend = 'setuptools.build_meta'
+build-backend = "hatchling.build"
 
 [project]
 name="{{ project_name }}"
@@ -227,15 +227,23 @@ convention = "numpy"
 max-args = 10
 max-positional-args = 10
 
-[tool.setuptools]
+[tool.hatch.build.targets.wheel]
 packages = ["{{ project_slug }}"]
 
-[tool.setuptools_scm]
-fallback_version = "9999"
+
+[tool.hatch.version]
+fallback-version = "0.0.0"
+source = "vcs"
+# tag-pattern = "v(?P<version>\\d+\\.\\d+\\.\\d+)"
+
+[tool.hatch.version.raw-options]
 # Default git command uses "*[0-9]*", which breaks with cX.X.X tags.
 # This spec below forces setuptools_scm to look strictly for vX.X.X tags
-git_describe_command = [ "git", "describe", "--dirty", "--tags", "--long", "--match", "v*[0-9]*" ]
-version_file = "{{ project_slug }}/_version.py"
+git_describe_command = ["git", "describe", "--dirty", "--tags", "--long", "--match", "v*[0-9]*"]
+
+[tool.hatch.build.hooks.vcs]
+version-file = "{{ project_slug }}/_version.py"
+
 
 [tool.pixi.workspace]
 channels = ["conda-forge"]

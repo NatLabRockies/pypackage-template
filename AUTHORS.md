@@ -1,7 +1,7 @@
 # Credits
 
 This package was developed at the `Strategic Energy Analysis and Decision Sciences (SEADS)`
-directorate at the `National Renewable Energy Laboratory (NREL)`.
+directorate at the `National Laboratory of the Rockies (NLR)`.
 
 ## Development Lead
 
