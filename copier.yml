@@ -2,16 +2,16 @@
 _subdirectory: template
 project_title:
     type: str
-    placeholder: "NREL's Modern Data Standards"
+    placeholder: "NLR's Modern Data Standards"
     help: What is your project title? This title will be used in places such as documentation and the README landing page. There are no restrictions on characters.
 project_name:
     type: str
-    placeholder: "NREL-Modern-Data"
+    placeholder: "NLR-Modern-Data"
     help: What is your project name? This is typically the name of the repository and the name registered on PyPI. You can use upper-case and hyphens, but don't use spaces or special characters.
 project_slug:
     type: str
     default: "{{ project_name | lower | replace(' ', '-') | regex_replace('[-]+', '_') }}"
-    help: What is your module/library name, i.e. how it will be imported inside Python? For instance, if the package name was NREL-reVRt, you might want to use `revrt` here, so that inside Python it would be `import revrt`. Use only lower-case, no hyphens, no spaces, and no special characters. Prefer a single word.
+    help: What is your module/library name, i.e. how it will be imported inside Python? For instance, if the package name was NLR-reVRt, you might want to use `revrt` here, so that inside Python it would be `import revrt`. Use only lower-case, no hyphens, no spaces, and no special characters. Prefer a single word.
     # validator: >-
     #     {% if not (project_name | regex_search('^[a-z][a-z0-9\-]+$')) %}
     #     project_name must start with a letter, followed one or more letters, digits or dashes all lowercase.
@@ -38,7 +38,7 @@ orcid:
     help: What is your ORCID? (optional)
 repository:
     type: str
-    default: "https://github.com/NREL/{{ project_name }}"
+    default: "https://github.com/NatLabRockies/{{ project_name }}"
     help: What is the repository URL?
 github_username:
     type: str
