@@ -4,4 +4,4 @@
    :toctree: _autosummary
    :recursive:
 
-   {{ project_name }}
+   {{ project_slug }}
