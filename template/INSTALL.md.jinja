@@ -1,60 +1,76 @@
 # Installing {{ project_title }}
 
-There are several ways to install a Python package. We strongly recommend
-using a virtual environment to avoid conflicts with other packages and
-projects in your system. For development we use `pixi` and is our recommended
-way of installing it.
+There are several ways to install {{ project_name }}.
+We strongly recommend using a virtual environment to avoid conflicts with
+other packages and projects on your system.
 
-Some options are:
+## Quick Start
 
-1. [Installing with Pixi (recommended)](#installing-with-pixi-recommended)
-2. [Installing with PIP](#installing-with-pip)
-3. [Installing with wheels](#installing-with-wheels)
-4. [Installing with Conda](#installing-with-conda)
+Choose your preferred installation method:
 
+1. [**Pixi** (recommended for development)](#installing-with-pixi-recommended) - Reproducible environments with exact dependency versions
+2. [**pip**](#installing-with-pip) - Standard Python package installation
+3. [**Conda/Mamba**](#installing-with-conda) - Conda ecosystem integration
+4. [**Wheels**](#installing-from-released-wheels) - Pre-built distribution files
 
-### Installing with Pixi (recommended)
+---
 
-We recommend using `pixi` to manage a Python environment with `{{ project_name }}` and all the required dependencies since it can reproduce exactly what we use for development.
+## Installing with Pixi (recommended)
 
-1. Install `pixi` itself on your system. You only need to do this once, so you can skip this step if you already have `pixi` installed.
+[Pixi](https://pixi.sh) provides reproducible Python environments and is our recommended tool for development. It uses the `pyproject.toml` and `pixi.lock` files to ensure you have exactly the same dependencies as the development team.
 
-Please follow the instructions at [pixi.sh](https://pixi.sh) to install `pixi` on your system.
+### Installation Steps
 
-For Linux and MacOS:
+1. **Install Pixi** (skip if already installed)
+
+   **Linux and macOS:**
    ```bash
    curl -fsSL https://pixi.sh/install.sh | sh
    ```
 
-For Windows:
-   ```cmd
+   **Windows (PowerShell):**
+   ```powershell
    powershell -ExecutionPolicy ByPass -c "irm -useb https://pixi.sh/install.ps1 | iex"
    ```
 
-2. Clone the {{project_name}} repository if you don't already have it.
+   For more installation options, see [pixi.sh](https://pixi.sh).
 
-3. Pixi provides support to use virtual environment with all the dependencies
-   required. To do so, pixi uses the information from `pyproject.toml` and
-   `pixi.lock` files, therefore, you need to move to where you cloned the
-   repository. Once there, you can activate your environment by running:
+2. **Clone the repository** (if you haven't already)
+
+   ```bash
+   git clone {{ repository }}
+   cd {{ project_slug }}
+   ```
+
+3. **Activate the Pixi environment**
+
    ```bash
    pixi shell
    ```
 
-   You might notice a `({{ project_name }})` prefix in your terminal, which
-   indicates that you are now in the `{{ project_name }}` environment.
+   You should see a `({{ project_name }})` prefix in your terminal prompt, indicating the environment is active.
 
+   Note that `pixi` use information from `pyproject.toml` and `pixi.lock` to
+   build the environment, so you must be inside the local directory that
+   contains the repository.
+
+4. **Verify the installation**
+
+   Inside Python:
    ```python
    import {{ project_slug }}
+   print({{ project_slug }}.__version__)
    ```
 
-### Installing with PIP
+---
 
-`{{ project_name }}` targets Python {{ requires_python }} or newer.
+## Installing with PIP
+
+`{{ project_name }}` requires Python {{ requires_python }} or newer.
 Before installing, ensure the package requirements below are met and
 then choose the environment manager that best fits your workflow.
 
-#### Using `virtualenv`
+### Using `virtualenv`
 
 1. Install `virtualenv` if needed:
    `python3 -m pip install --user virtualenv`.
@@ -72,7 +88,7 @@ then choose the environment manager that best fits your workflow.
    If you already cloned the repository locally, run
    `python -m pip install .` from the project root instead.
 
-#### Using Conda or Mamba
+### Using Conda or Mamba
 
 1. Create a dedicated environment (replace `mamba` with `conda` if you
    prefer):
@@ -93,13 +109,13 @@ then choose the environment manager that best fits your workflow.
 After installation you can verify everything is available by running
 `{{ project_slug }} --help`.
 
-### Installing from released Wheels
+## Installing from released Wheels
 
 Start by downloading the wheels from
 [the latest {{ project_name }} release]({{ repository }}/releases).
 Once you have the correct wheel file, install it using pip:
 
-#### Using `virtualenv`
+### Using `virtualenv`
 
 1. Create and activate the environment as shown in
    [Installing with PIP](#installing-with-pip).
@@ -121,4 +137,7 @@ Once you have the correct wheel file, install it using pip:
 You can verify the installation by running `{{ project_slug }} --help` in the
 active environment.
 
-### Installing with Conda
+## Installing with Conda
+
+```shell
+conda -c conda-forge
