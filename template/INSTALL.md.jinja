@@ -70,7 +70,7 @@ Choose your preferred installation method:
 Before installing, ensure the package requirements below are met and
 then choose the environment manager that best fits your workflow.
 
-#### Using `virtualenv`
+### Using `virtualenv`
 
 1. Install `virtualenv` if needed:
    `python3 -m pip install --user virtualenv`.
@@ -88,7 +88,7 @@ then choose the environment manager that best fits your workflow.
    If you already cloned the repository locally, run
    `python -m pip install .` from the project root instead.
 
-#### Using Conda or Mamba
+### Using Conda or Mamba
 
 1. Create a dedicated environment (replace `mamba` with `conda` if you
    prefer):
@@ -109,13 +109,13 @@ then choose the environment manager that best fits your workflow.
 After installation you can verify everything is available by running
 `{{ project_slug }} --help`.
 
-### Installing from released Wheels
+## Installing from released Wheels
 
 Start by downloading the wheels from
 [the latest {{ project_name }} release]({{ repository }}/releases).
 Once you have the correct wheel file, install it using pip:
 
-#### Using `virtualenv`
+### Using `virtualenv`
 
 1. Create and activate the environment as shown in
    [Installing with PIP](#installing-with-pip).
@@ -137,4 +137,7 @@ Once you have the correct wheel file, install it using pip:
 You can verify the installation by running `{{ project_slug }} --help` in the
 active environment.
 
-### Installing with Conda
+## Installing with Conda
+
+```shell
+conda -c conda-forge
