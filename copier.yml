@@ -1,5 +1,10 @@
-# questions
+# Copier settings
+_envops:
+  trim_blocks: true
+  lstrip_blocks: true
 _subdirectory: template
+
+# Questions
 project_title:
     type: str
     placeholder: "NLR's Modern Data Standards"
