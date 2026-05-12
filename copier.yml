@@ -60,6 +60,14 @@ requires_python:
         - "3.14"
     default: "3.12"
     help: What is the minimum Python version required?
+documentation:
+    help: Publish documentation?
+    type: str
+    choices:
+      GitHub pages: "github.com"
+      PDF with releases: "pdf"
+      Both: "all"
+    default: "github.com"
 command_line_interface:
     type: str
     default: "Click"
