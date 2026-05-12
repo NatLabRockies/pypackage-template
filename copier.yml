@@ -61,7 +61,7 @@ requires_python:
     default: "3.12"
     help: What is the minimum Python version required?
 documentation:
-    help: Publish documentation?
+    help: Publish documentation where?
     type: str
     choices:
       GitHub pages: "github.com"
