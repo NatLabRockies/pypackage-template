@@ -1,62 +1,182 @@
 name: Python Documentation
 
-permissions: write-all
-
 on:
   pull_request:
   push:
-    branches: [main]
+    branches:
+      - main
   release:
-    types: [created, published]
+    types: [published]
   workflow_dispatch:
+
+# Cancel superseded runs on the same ref to save runner minutes — only on
+# PRs, so a release deploy in flight is never interrupted by a follow-up.
+concurrency:
+  group: docs-{% raw %}${{ github.workflow }}-${{ github.ref }}{% endraw +%}
+  cancel-in-progress: {% raw %}${{ github.event_name == 'pull_request' }}{% endraw +%}
 
 jobs:
   build_docs:
     name: Build docs
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/v')
+    permissions:
+      contents: read
 
     steps:
-      # Install Latex if building PDF docs
-      # - name: Install LaTeX
-      #   run: "sudo apt-get install -y latexmk texlive-latex-recommended texlive-latex-extra texlive-fonts-recommended texlive-xetex"
-
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
         with:
           fetch-depth: 0
           fetch-tags: true
 
-      - name: Set Pixi to manage environments
-        uses: prefix-dev/setup-pixi@82d477f15f3a381dbcc8adc1206ce643fe110fb7 #v0.9.3
+      - name: Setup Pixi
+        uses: prefix-dev/setup-pixi@82d477f15f3a381dbcc8adc1206ce643fe110fb7 # v0.9.3
         with:
-          pixi-version: v0.59.0
+          pixi-version: v0.67.2
+          locked: true
           cache: true
-          cache-write: {% raw %} ${{ github.ref == 'refs/heads/main' }} {% endraw %}
-          frozen: true
-          environments: docs
+          cache-write: {% raw %}${{ github.ref == 'refs/heads/main' }}{% endraw +%}
+          environments: doc
 
-      - name: Build HTML Docs
-        run: pixi run -e doc python-docs  # This errors on warnings
+      # ------------------------------------------------------------------
+      # Build the HTML docs on every trigger.
+      # Runs for every PR and push to main so documentation quality is
+      # tracked alongside the code. Also runs on release events because
+      # the `publish_docs` job downstream consumes the artifact.
+      # ------------------------------------------------------------------
+      - name: Build HTML docs
+        run: pixi run -e doc python-docs  # treats warnings as errors
 
-      - name: deploy
-        uses: peaceiris/actions-gh-pages@v4.0.0
-        # Only deploy full versions, not dev releases
-        if: startsWith(github.ref, 'refs/tags/v')
+{% if documentation in ['github.com', 'all'] %}
+      - name: Upload Pages artifact
+        # Skip on PRs: no downstream consumer (publish_docs only runs on
+        # release/dispatch), so the upload would be wasted runner time and
+        # storage. PRs still get their HTML build validated above.
+        if: {% raw %}${{ github.event_name != 'pull_request' }}{% endraw +%}
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
-          publish_dir: ./docs/_build/html
-          force_orphan: true
-          full_commit_message: {% raw %}${{ github.event.head_commit.message }}{% endraw %}
+          path: docs/_build/html
+          retention-days: 7
+{% endif %}
 
-      # Support for PDF docs
-      # - name: Build document
-      #   run: |
-      #     cd docs
-      #     make latexpdf
+{% if documentation in ['github.com', 'all'] %}
+  # ----------------------------------------------------------------------
+  # Tiny job that deploys to GitHub Pages via the first-party Pages API.
+  # Uses the `github-pages` artifact created by `upload-pages-artifact`
+  # above — no checkout, no download step, no separate gh-pages branch.
+  #
+  # Requires repo Settings → Pages → Source set to "GitHub Actions".
+  #
+  # Fires on published releases, and on manual `workflow_dispatch` but
+  # ONLY when the dispatch is run against a clean v*.*.* tag — dispatches
+  # from branches or pre-release tags (e.g. v1.2.3-dev) are ignored so we
+  # never accidentally promote dev docs to the public site.
+  # ----------------------------------------------------------------------
+  publish_docs:
+    name: Publish docs to GitHub Pages
+    needs: build_docs
+    if: >-
+      {%+ raw %}${{ github.event_name == 'release' ||
+      (github.event_name == 'workflow_dispatch' &&
+      startsWith(github.ref, 'refs/tags/v') &&
+      !contains(github.ref_name, '-')) }}{% endraw +%}
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write       # deploy to Pages
+      id-token: write    # verify the deployment came from this workflow
+    environment:
+      name: github-pages
+      url: {% raw %}${{ steps.deployment.outputs.page_url }}{% endraw +%}
 
-      # - name: Release
-      #   uses: fnkr/github-action-ghr@v1
-      #   env:
-      #     GHR_PATH: docs/_build/latex/MyPackage.pdf
-      #     GITHUB_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+{% endif %}
+
+{% if documentation in ['pdf', 'all'] %}
+  # ----------------------------------------------------------------------
+  # Separate job for the PDF build. Isolating it keeps the heavy LaTeX
+  # install off the critical HTML path and out of every PR run. Depends
+  # on `build_docs` so it only runs when the HTML build succeeded.
+  # Runs with `contents: read` only — the release upload happens in the
+  # small `publish_pdf` job below, which is the only job that holds
+  # write permissions for the PDF flow.
+  # ----------------------------------------------------------------------
+  build_pdf:
+    name: Build PDF
+    needs: build_docs
+    # Skip on PRs to avoid the LaTeX install; runs on push to main (so
+    # each merge validates the PDF path before the next release), on
+    # releases, and on manual dispatch.
+    if: {% raw %}${{ github.event_name != 'pull_request' }}{% endraw +%}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+          fetch-tags: true
+
+      - name: Setup Pixi
+        uses: prefix-dev/setup-pixi@82d477f15f3a381dbcc8adc1206ce643fe110fb7 # v0.9.3
+        with:
+          pixi-version: v0.67.2
+          locked: true
+          cache: true
+          cache-write: false   # build_docs owns cache writes; just read here
+          environments: doc
+
+      - name: Install LaTeX
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            latexmk \
+            texlive-latex-recommended \
+            texlive-latex-extra \
+            texlive-fonts-recommended \
+            texlive-xetex
+
+      - name: Build PDF docs
+        run: |
+          cd docs
+          make latexpdf
+
+      - name: Upload PDF artifact
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: docs-pdf
+          path: docs/_build/latex/*.pdf
+          if-no-files-found: error
+          retention-days: 7
+
+  # ----------------------------------------------------------------------
+  # Tiny job whose only purpose is to attach the PDF to a published
+  # release. Holds the `contents: write` permission so the build job
+  # above doesn't have to. No checkout, no pixi, no source code — only
+  # the artifact and the GitHub API.
+  # ----------------------------------------------------------------------
+  publish_pdf:
+    name: Publish PDF to release
+    needs: build_pdf
+    if: {% raw %}${{ github.event_name == 'release' }}{% endraw +%}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Download PDF artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docs-pdf
+          path: pdf
+
+      - name: Attach PDF to release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: pdf/**/*.pdf
+          token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw +%}
+{% endif %}
