@@ -62,12 +62,12 @@ requires_python:
     help: What is the minimum Python version required?
 command_line_interface:
     type: str
-    default: "Click"
+    default: "click"
     choices:
-        - Click
-        - Typer
-        # - Argparse
-        # - No command-line interface
+        - Typer: "type"
+        - Click: "click"
+        - Argparse: "argparse"
+        - No command-line interface: "no-cli"
     help: Which command line interface do you want to use?
 project_license:
     type: str
