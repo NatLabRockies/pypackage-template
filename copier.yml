@@ -64,7 +64,7 @@ command_line_interface:
     type: str
     default: "click"
     choices:
-        - Typer: "type"
+        - Typer: "typer"
         - Click: "click"
         - Argparse: "argparse"
         - No command-line interface: "no-cli"
