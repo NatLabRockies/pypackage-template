@@ -3,8 +3,8 @@
 from pathlib import Path
 
 import pytest
-{% if command_line_interface == "Click" %}from click.testing import CliRunner
-{% elif command_line_interface == "Typer" %}from typer.testing import CliRunner
+{% if command_line_interface == "click" %}from click.testing import CliRunner
+{% elif command_line_interface == "typer" %}from typer.testing import CliRunner
 {% endif %}
 LOGGING_META_FILES = {"exceptions.py", "warn.py"}
 
@@ -50,7 +50,9 @@ def test_data_dir(test_dir):
     return test_dir / "data"
 
 
+{% if command_line_interface in ["click", "typer"] %}
 @pytest.fixture
 def cli_runner():
     """Return a `CliRunner` for testing commands"""
     return CliRunner()
+{% endif %}
