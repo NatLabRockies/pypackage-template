@@ -1,0 +1,45 @@
+"""Console script for {{ project_name }}"""
+
+import argparse
+import sys
+
+from rich.console import Console
+
+import {{ project_slug }}
+
+console = Console()
+
+
+def build_parser() -> argparse.ArgumentParser:
+    """Build the argument parser for {{ project_name }}."""
+    parser = argparse.ArgumentParser(
+        prog="{{ project_slug }}",
+        description="{{ project_name }} command line interface",
+    )
+    parser.add_argument(
+        "--version",
+        action="version",
+        version="%(prog)s {version}".format(version={{ project_slug }}.__version__),
+    )
+    return parser
+
+
+def main(argv=None) -> int:
+    """{{ project_name }} command line interface"""
+    parser = build_parser()
+    parser.parse_args(argv)
+
+    console.print("Hello from {{ project_name }}!")
+    console.print(
+        "Replace this message by putting your code into "
+        "{{ project_slug }}.cli.main"
+    )
+    console.print(
+        "See argparse documentation at "
+        "https://docs.python.org/3/library/argparse.html"
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main())
