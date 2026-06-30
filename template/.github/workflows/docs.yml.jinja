@@ -32,7 +32,7 @@ jobs:
         with:
           pixi-version: v0.59.0
           cache: true
-          cache-write: {% raw %} ${{ github.ref == 'refs/heads/main' }} {% endraw %}
+          cache-write: {% raw %} ${{ github.ref == 'refs/heads/main' }} {% endraw +%}
           frozen: true
           environments: docs
 
@@ -44,10 +44,10 @@ jobs:
         # Only deploy full versions, not dev releases
         if: startsWith(github.ref, 'refs/tags/v')
         with:
-          github_token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+          github_token: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw +%}
           publish_dir: ./docs/_build/html
           force_orphan: true
-          full_commit_message: {% raw %}${{ github.event.head_commit.message }}{% endraw %}
+          full_commit_message: {% raw %}${{ github.event.head_commit.message }}{% endraw +%}
 
       # Support for PDF docs
       # - name: Build document
@@ -59,4 +59,4 @@ jobs:
       #   uses: fnkr/github-action-ghr@v1
       #   env:
       #     GHR_PATH: docs/_build/latex/MyPackage.pdf
-      #     GITHUB_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw %}
+      #     GITHUB_TOKEN: {% raw %}${{ secrets.GITHUB_TOKEN }}{% endraw +%}
