@@ -25,21 +25,37 @@ classifiers=[
   "Natural Language :: English",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
-  {% if requires_python <= "3.11" %}"Programming Language :: Python :: 3.11",{% endif %}
-  {% if requires_python <= "3.12" %}"Programming Language :: Python :: 3.12",{% endif %}
-  {% if requires_python <= "3.13" %}"Programming Language :: Python :: 3.13",{% endif %}
-  {% if requires_python <= "3.14" %}"Programming Language :: Python :: 3.14",{% endif %}
+  {% if requires_python <= "3.11" %}
+  "Programming Language :: Python :: 3.11",
+  {% endif %}
+  {% if requires_python <= "3.12" %}
+  "Programming Language :: Python :: 3.12",
+  {% endif %}
+  {% if requires_python <= "3.13" %}
+  "Programming Language :: Python :: 3.13",
+  {% endif %}
+  {% if requires_python <= "3.14" %}
+  "Programming Language :: Python :: 3.14",
+  {% endif %}
   "Topic :: Software Development :: Libraries :: Application Frameworks",
 ]
 dependencies = [
-  {% if command_line_interface == "Click" %}"click>=8.0.0",{% elif command_line_interface == "Typer" %}"typer>=0.12",{% endif %}
-  {% if command_line_interface != "No command-line interface" %}"rich>=14.2.0,<15",{% endif %}
+  {% if command_line_interface == "Click" %}
+  "click>=8.0.0",
+  {% elif command_line_interface == "Typer" %}
+  "typer>=0.12",
+  {% endif %}
+  {% if command_line_interface != "No command-line interface" %}
+  "rich>=14.2.0,<15",
+  {% endif %}
 ]
 
 [project.optional-dependencies]
 dev = [
   "ipython>=8.29.0,<9",
-  {% if use_pre_commit %}"pre-commit>=4.0.1,<5",{% endif %}
+  {% if use_pre_commit %}
+  "pre-commit>=4.0.1,<5",
+  {% endif %}
 ]
 doc = [
   "myst-parser>=5.0.0,<6",
@@ -271,14 +287,18 @@ build-wheels = { cmd = "uv build --sdist --wheel --out-dir dist/ ." }
 publish-pypi = { cmd = "uv publish", depends-on = ["build-wheels"] }
 
 [tool.pixi.dependencies]
-{% if command_line_interface != "No command-line interface" %}rich = ">=14.2.0,<15"{% endif %}
+{% if command_line_interface != "No command-line interface" %}
+rich = ">=14.2.0,<15"
+{% endif %}
 
 [tool.pixi.pypi-dependencies]
 {{ project_slug }} = { path = ".", editable = true }
 
 [tool.pixi.feature.dev.dependencies]
 ipython = ">=8.29.0,<9"
-{% if use_pre_commit %}pre-commit = ">=4.0.1,<5"{% endif %}
+{% if use_pre_commit %}
+pre-commit = ">=4.0.1,<5"
+{% endif %}
 ruff = ">=0.14.5,<0.15"
 
 [tool.pixi.feature.test.dependencies]

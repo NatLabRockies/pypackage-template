@@ -56,7 +56,7 @@ jobs:
   unit-tests:
     needs: lint
     name: Python Unit Tests (Pixi)
-    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw +%}
     strategy:
       fail-fast: false
       max-parallel: 8
@@ -75,7 +75,7 @@ jobs:
         pixi-version: v0.59.0
         locked: true
         cache: true
-        cache-write: {% raw %}${{ github.ref == 'refs/heads/main' }}{% endraw %}
+        cache-write: {% raw %}${{ github.ref == 'refs/heads/main' }}{% endraw +%}
         environments: dev
 
     - run: |
@@ -85,7 +85,7 @@ jobs:
   integration-tests:
     needs: lint
     name: Python Integration Tests (Pixi)
-    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw +%}
     strategy:
       fail-fast: false
       max-parallel: 8
@@ -114,7 +114,7 @@ jobs:
   tox-tests:
     needs: lint
     name: Python tests (Tox)
-    runs-on: {% raw %}${{ matrix.os }}{% endraw %}
+    runs-on: {% raw %}${{ matrix.os }}{% endraw +%}
     strategy:
       fail-fast: false
       max-parallel: 8
@@ -128,10 +128,10 @@ jobs:
         fetch-depth: 0
         fetch-tags: true
 
-    - name: Set up Python {% raw %}${{ matrix.python-version }}{% endraw %}
+    - name: Set up Python {% raw %}${{ matrix.python-version }}{% endraw +%}
       uses: actions/setup-python@v5
       with:
-        python-version: {% raw %}${{ matrix.python-version }}{% endraw %}
+        python-version: {% raw %}${{ matrix.python-version }}{% endraw +%}
         cache: 'pip'
 
     - name: Install Dependencies
@@ -143,12 +143,12 @@ jobs:
       uses: actions/cache/restore@v4
       with:
         path: .tox/
-        key: {% raw %}${{ runner.os }}-${{ matrix.python-version }}-tox-v1-${{ hashFiles('**/pyproject.toml') }}{% endraw %}
+        key: {% raw %}${{ runner.os }}-${{ matrix.python-version }}-tox-v1-${{ hashFiles('**/pyproject.toml') }}{% endraw +%}
         restore-keys: |
-          {% raw %}${{ runner.os }}-${{ matrix.python-version }}-tox-v1-{% endraw %}
+          {%+ raw %}${{ runner.os }}-${{ matrix.python-version }}-tox-v1-{% endraw +%}
 
     - name: Test with tox
-      run: tox -e {% raw %}${{{% endraw %} matrix.python-version == '{{ requires_python }}' && 'msv' || 'latest' {% raw %}}}{% endraw %}
+      run: tox -e {% raw %}${{{% endraw %} matrix.python-version == '{{ requires_python }}' && 'msv' || 'latest' {% raw %}}}{% endraw +%}
       env:
         PYTHONDEVMODE: 1
 
@@ -157,4 +157,4 @@ jobs:
       uses: actions/cache/save@v4
       with:
         path: .tox/
-        key: {% raw %}${{ runner.os }}-${{ matrix.python-version }}-tox-v1-${{ hashFiles('**/pyproject.toml') }}{% endraw %}
+        key: {% raw %}${{ runner.os }}-${{ matrix.python-version }}-tox-v1-${{ hashFiles('**/pyproject.toml') }}{% endraw +%}
