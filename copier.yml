@@ -3,6 +3,7 @@ _envops:
   trim_blocks: true
   lstrip_blocks: true
 _subdirectory: template
+_templates_suffix: .jinja
 
 # Questions
 project_title:
