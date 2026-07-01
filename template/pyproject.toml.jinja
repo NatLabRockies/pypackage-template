@@ -82,9 +82,11 @@ test = [
   "tox>=4.32.0,<5",
 ]
 
+{% if command_line_interface != "no-cli" %}
 [project.scripts]
 {{ project_slug }} = "{{ project_slug }}.cli:main"
 
+{% endif %}
 [project.urls]
 homepage = "{{ repository }}"
 documentation = "{{ repository }}"
