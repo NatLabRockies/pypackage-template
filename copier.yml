@@ -64,10 +64,10 @@ command_line_interface:
     type: str
     default: "click"
     choices:
-        - Typer: "typer"
-        - Click: "click"
-        - Argparse: "argparse"
-        - No command-line interface: "no-cli"
+        Typer: "typer"
+        Click: "click"
+        Argparse: "argparse"
+        No command-line interface: "no-cli"
     help: Which command line interface do you want to use?
 project_license:
     type: str
