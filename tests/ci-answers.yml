@@ -1,0 +1,11 @@
+# Dummy answers used by the template CI to render the template non-interactively.
+# Only questions without a usable default are set here; the rest fall back to
+# the defaults declared in ../copier.yml when copier is run with --defaults.
+project_title: "CI Test Project"
+project_name: "ci-test-project"
+package_short_description: "A dummy package generated in CI to validate the template."
+author_first_name: "CI"
+author_family_name: "Tester"
+email: "ci@example.com"
+orcid: "0000-0000-0000-0000"
+github_username: "ci-tester"
