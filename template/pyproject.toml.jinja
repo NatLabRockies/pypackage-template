@@ -43,7 +43,7 @@ dependencies = [
   {% if command_line_interface == "Click" %}
   "click>=8.0.0",
   {% elif command_line_interface == "Typer" %}
-  "typer>=0.12",
+  "typer>=0.25",
   {% endif %}
   {% if command_line_interface != "No command-line interface" %}
   "rich>=14.2.0,<15",
