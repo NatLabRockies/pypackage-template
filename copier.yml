@@ -36,7 +36,7 @@ author_family_name:
     help: What is your family (last) name?
 email:
     type: str
-    placeholder: "gpimenta@nrel.gov"
+    placeholder: "gpimenta@nlr.gov"
     help: What is your email address?
 orcid:
     type: str
