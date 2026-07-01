@@ -3,9 +3,12 @@
 from pathlib import Path
 
 import pytest
-{% if command_line_interface == "click" %}from click.testing import CliRunner
-{% elif command_line_interface == "typer" %}from typer.testing import CliRunner
+{% if command_line_interface == "click" %}
+from click.testing import CliRunner
+{% elif command_line_interface == "typer" %}
+from typer.testing import CliRunner
 {% endif %}
+
 LOGGING_META_FILES = {"exceptions.py", "warn.py"}
 
 
