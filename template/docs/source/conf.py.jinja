@@ -54,7 +54,9 @@ extensions = [
     "sphinx.ext.viewcode",
     "sphinx.ext.githubpages",
     "sphinx.ext.napoleon",
+    {% if command_line_interface in ["click", "typer"] %}
     "sphinx_click.ext",
+    {% endif %}
     "sphinx_tabs.tabs",
     "sphinx_copybutton",
     "sphinxcontrib.bibtex",

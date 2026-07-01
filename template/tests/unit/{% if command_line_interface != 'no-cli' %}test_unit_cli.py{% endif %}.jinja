@@ -1,11 +1,11 @@
 """Unit tests for `{{ project_slug }}` CLI"""
 
-{% if command_line_interface in ["click", "typer"] %}
 {% if command_line_interface == "click" %}
 from {{ project_slug }}.cli import main as app
-{% else %}
+{% elif command_line_interface == "typer" %}
 from {{ project_slug }}.cli import app
 {% endif %}
+{% if command_line_interface in ["click", "typer"] %}
 
 
 def test_hello_command(cli_runner):

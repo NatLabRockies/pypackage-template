@@ -47,3 +47,40 @@ jobs:
       - name: Import the rendered package
         run: |
           pixi run python -c "import ci_test_project; print(ci_test_project.__version__)"
+
+  test-cli:
+    name: Verify CLI of the rendered package
+    needs: render-template
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout template
+        uses: actions/checkout@8e8c483db84b4bee98b60c0593521ed34d9990e8 # v6.0.1
+        with:
+          fetch-depth: 0
+
+      - name: Set up pixi
+        uses: prefix-dev/setup-pixi@a09b6247153796b190642a2b53fac4241043cf6f # v0.10.0
+        with:
+          pixi-version: v0.71.2
+          cache: true
+
+      - name: Render template to a temporary directory
+        run: |
+          pixi run copier copy \
+            --vcs-ref=HEAD \
+            --defaults \
+            --data-file tests/ci-answers.yml \
+            . "$RUNNER_TEMP/generated"
+
+      - name: Install the rendered package
+        run: |
+          # The pixi env pulled in by copier ships Python without pip.
+          pixi run python -m ensurepip
+          pixi run python -m pip install -e "$RUNNER_TEMP/generated"
+
+      - name: Verify the CLI console script is installed and runs
+        # Regression guard: the console script must be present and `--version`
+        # must exit 0. Catches template bugs where `cli.py` is not generated or
+        # `[project.scripts]` points at a missing entry point.
+        run: |
+          pixi run ci_test_project --version
