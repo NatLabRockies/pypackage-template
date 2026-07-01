@@ -13,5 +13,5 @@ version = "0.1.0"
 [tasks]
 
 [dependencies]
-copier = ">=9.7.1,<10"
+copier = ">=9.16.0,<10"
 pre-commit = ">=4.5.0,<5"
