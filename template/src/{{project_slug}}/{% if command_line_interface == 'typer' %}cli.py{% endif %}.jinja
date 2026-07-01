@@ -1,4 +1,4 @@
-"""Console script for {{ project_slug }}"""
+"""Console script for {{ project_name }}"""
 
 import typer
 from rich.console import Console
@@ -10,15 +10,20 @@ console = Console()
 
 
 @app.command()
-def main():
+def hello():
     """{{ project_name }} command line interface"""
     console.print("Hello from {{ project_name }}!")
     console.print(
         "Replace this message by putting your code into "
-        "{{ project_slug }}.cli.main"
+        "{{ project_slug }}.cli.hello"
     )
     console.print("See Typer documentation at https://typer.tiangolo.com/")
 
 
-if __name__ == "__main__":
+def main():
+    """Entry point for the console script."""
     app()
+
+
+if __name__ == "__main__":
+    main()
