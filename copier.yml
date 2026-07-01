@@ -3,6 +3,7 @@ _envops:
   trim_blocks: true
   lstrip_blocks: true
 _subdirectory: template
+_templates_suffix: .jinja
 
 # Questions
 project_title:
@@ -35,7 +36,7 @@ author_family_name:
     help: What is your family (last) name?
 email:
     type: str
-    placeholder: "gpimenta@nrel.gov"
+    placeholder: "gpimenta@nlr.gov"
     help: What is your email address?
 orcid:
     type: str
@@ -62,12 +63,12 @@ requires_python:
     help: What is the minimum Python version required?
 command_line_interface:
     type: str
-    default: "Click"
+    default: "click"
     choices:
-        - Click
-        - Typer
-        # - Argparse
-        # - No command-line interface
+        Typer: "typer"
+        Click: "click"
+        Argparse: "argparse"
+        No command-line interface: "no-cli"
     help: Which command line interface do you want to use?
 project_license:
     type: str

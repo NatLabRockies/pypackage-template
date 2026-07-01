@@ -40,12 +40,12 @@ classifiers=[
   "Topic :: Software Development :: Libraries :: Application Frameworks",
 ]
 dependencies = [
-  {% if command_line_interface == "Click" %}
+  {% if command_line_interface == "click" %}
   "click>=8.0.0",
-  {% elif command_line_interface == "Typer" %}
-  "typer>=0.12",
+  {% elif command_line_interface == "typer" %}
+  "typer>=0.25",
   {% endif %}
-  {% if command_line_interface != "No command-line interface" %}
+  {% if command_line_interface != "no-cli" %}
   "rich>=14.2.0,<15",
   {% endif %}
 ]
@@ -287,7 +287,7 @@ build-wheels = { cmd = "uv build --sdist --wheel --out-dir dist/ ." }
 publish-pypi = { cmd = "uv publish", depends-on = ["build-wheels"] }
 
 [tool.pixi.dependencies]
-{% if command_line_interface != "No command-line interface" %}
+{% if command_line_interface != "no-cli" %}
 rich = ">=14.2.0,<15"
 {% endif %}
 
