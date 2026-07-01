@@ -28,7 +28,6 @@ jobs:
       - name: Render template to a temporary directory
         run: |
           pixi run copier copy \
-            --trust \
             --vcs-ref=HEAD \
             --defaults \
             --data-file tests/ci-answers.yml \
