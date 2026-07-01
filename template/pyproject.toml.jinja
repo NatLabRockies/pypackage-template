@@ -244,7 +244,7 @@ max-args = 10
 max-positional-args = 10
 
 [tool.hatch.build.targets.wheel]
-packages = ["{{ project_slug }}"]
+packages = ["src/{{ project_slug }}"]
 
 
 [tool.hatch.version]
@@ -258,7 +258,7 @@ source = "vcs"
 git_describe_command = ["git", "describe", "--dirty", "--tags", "--long", "--match", "v*[0-9]*"]
 
 [tool.hatch.build.hooks.vcs]
-version-file = "{{ project_slug }}/_version.py"
+version-file = "src/{{ project_slug }}/_version.py"
 
 
 [tool.pixi.workspace]
@@ -273,8 +273,8 @@ test = { features = ["test"], solve-group = "default" }
 build = { features = ["build"], solve-group = "default" }
 
 [tool.pixi.feature.dev.tasks]
-lint = "ruff check ./{{ project_slug }}"
-format = "ruff format ./{{ project_slug }}"
+lint = "ruff check ./src/{{ project_slug }}"
+format = "ruff format ./src/{{ project_slug }}"
 tests = "pytest --durations=20 -rapP -vv --cov={{ project_slug }} --cov-report=html --cov-branch --cov-report=xml:coverage.xml --cov-fail-under=80 tests/"
 tests-u = "pytest --durations=20 -rapP -vv --cov={{ project_slug }} --cov-report=html --cov-branch --cov-report=xml:coverage.xml --cov-fail-under=80 tests/unit"
 tests-i = "pytest --durations=20 -rapP -vv --cov={{ project_slug }} --cov-report=html --cov-branch --cov-report=xml:coverage.xml tests/integration"
