@@ -7,7 +7,7 @@
 - Environment management: **Pixi** environments (`default`, `dev`, `test`,
   `doc`, `build`). Always prefer Pixi over bare pip for dependency
   consistency.
-- Packaging/versioning: `setuptools_scm` (version in `{{ project_slug }}/_version.py`
+- Packaging/versioning: `setuptools_scm` (version in `src/{{ project_slug }}/_version.py`
   generated dynamically by tags `vX.Y.Z`).
 - Linting/Formatting: Ruff (configured in `pyproject.toml`). Line length 79
   (72 for docstrings). Ruff also runs format checks.
@@ -107,9 +107,9 @@ for development (tests, linting, docs, etc.).
 
 ## 8. Implementing a Sample Feature (Reference Flow)
 Example: Add a new module.
-1. Create `{{ project_slug }}/<module_name>.py` (or `{{ project_slug }}/utilities/<module_name>.py`)
+1. Create `src/{{ project_slug }}/<module_name>.py` (or `src/{{ project_slug }}/utilities/<module_name>.py`)
    with the new module logic and corresponding docstrings.
-2. Wire the feature into the CLI in `{{ project_slug }}/cli.py`.
+2. Wire the feature into the CLI in `src/{{ project_slug }}/cli.py`.
 3. Add tests in `tests/test_<module_name>.py` (or `tests/utilities/test_<module_name>.py`).
 4. Run `pixi run -e dev tests` and refresh regression assets as needed.
 

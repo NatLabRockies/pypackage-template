@@ -1,0 +1,29 @@
+"""Console script for {{ project_name }}"""
+
+import click
+from rich.console import Console
+
+import {{ project_slug }}
+
+console = Console()
+
+
+@click.command()
+@click.version_option(version={{ project_slug }}.__version__)
+@click.pass_context
+def main(ctx):
+    """{{ project_name }} command line interface"""
+    ctx.ensure_object(dict)
+    console.print("Hello from {{ project_name }}!")
+    console.print(
+        "Replace this message by putting your code into "
+        "{{ project_slug }}.cli.main"
+    )
+    console.print(
+        "See Click documentation at "
+        "https://click.palletsprojects.com/en/stable/"
+    )
+
+
+if __name__ == "__main__":
+    main(obj={})
