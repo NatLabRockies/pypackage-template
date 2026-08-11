@@ -6,10 +6,6 @@ updates:
     directory: "/"
     schedule:
       interval: daily
-    cooldown:
-      default-days: 3
-      semver-major-days: 7
-      semver-patch-days: 1
     allow:
       - dependency-type: "direct"
     open-pull-requests-limit: 0
