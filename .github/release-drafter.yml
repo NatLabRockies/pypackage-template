@@ -24,6 +24,9 @@ categories:
       - 'dependencies'
       - 'chore'
       - 'github_actions'
+  - title: 'Other Changes'
+    labels:
+      - '*'
 version-resolver:
   major:
     labels:
