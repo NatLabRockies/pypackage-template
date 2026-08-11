@@ -1,4 +1,4 @@
-name-template: 'Draft: v$RESOLVED_VERSION'
+name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
 categories:
