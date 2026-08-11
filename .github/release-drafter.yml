@@ -72,3 +72,8 @@ template: |
   # What's Changed
 
   $CHANGES
+
+  ## Contributors
+  $CONTRIBUTORS
+
+  **Full Changelog**: https://github.com/$OWNER/$REPO/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
