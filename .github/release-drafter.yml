@@ -1,0 +1,82 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+change-template: '- $TITLE (#$NUMBER) @$AUTHOR'
+categories:
+  - title: 'Breaking Changes'
+    labels:
+      - 'breaking'
+  - title: 'Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+      - 'new computation'
+  - title: 'Bug Fixes'
+    labels:
+      - 'fix'
+      - 'bug'
+      - 'bugfix'
+  - title: 'Updates'
+    labels:
+      - 'refactor'
+      - 'documentation'
+  - title: 'Chores'
+    labels:
+      - 'dependencies'
+      - 'chore'
+      - 'github_actions'
+  - title: 'Other Changes'
+    labels:
+      - '*'
+version-resolver:
+  major:
+    labels:
+      - 'breaking'
+  minor:
+    labels:
+      - 'feature'
+      - 'enhancement'
+      - 'new computation'
+  patch:
+    labels:
+      - 'fix'
+      - 'bug'
+      - 'bugfix'
+      - 'refactor'
+      - 'documentation'
+      - 'dependencies'
+      - 'chore'
+      - 'github_actions'
+  default: patch
+autolabeler:
+  - label: 'documentation'
+    files:
+      - 'docs/**/*'
+      - '**/*.md'
+      - '**/*.rst'
+  - label: 'fix'
+    branch:
+      - '/fix\/.+/'
+    title:
+      - '/^fix/i'
+  - label: 'feature'
+    branch:
+      - '/feat(ure)?\/.+/'
+    title:
+      - '/^feat/i'
+  - label: 'chore'
+    branch:
+      - '/chore\/.+/'
+    title:
+      - '/^chore/i'
+  - label: 'dependencies'
+    branch:
+      - '/(dependabot|renovate)\/.+/'
+template: |
+  # What's Changed
+
+  $CHANGES
+
+  ## Contributors
+  $CONTRIBUTORS
+
+  **Full Changelog**: https://github.com/$OWNER/$REPO/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
