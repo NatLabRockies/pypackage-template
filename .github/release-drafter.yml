@@ -44,6 +44,30 @@ version-resolver:
       - 'chore'
       - 'github_actions'
   default: patch
+autolabeler:
+  - label: 'documentation'
+    files:
+      - 'docs/**/*'
+      - '**/*.md'
+      - '**/*.rst'
+  - label: 'fix'
+    branch:
+      - '/fix\/.+/'
+    title:
+      - '/^fix/i'
+  - label: 'feature'
+    branch:
+      - '/feat(ure)?\/.+/'
+    title:
+      - '/^feat/i'
+  - label: 'chore'
+    branch:
+      - '/chore\/.+/'
+    title:
+      - '/^chore/i'
+  - label: 'dependencies'
+    branch:
+      - '/(dependabot|renovate)\/.+/'
 template: |
   # What's Changed
 
