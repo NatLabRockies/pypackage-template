@@ -1,0 +1,34 @@
+{{ fullname | escape | underline }}
+
+.. automodule:: {{ fullname }}
+
+{% if classes %}
+.. rubric:: Classes
+
+.. autosummary::
+   :toctree:
+{% for item in classes %}
+   {{ item }}
+{%- endfor %}
+{% endif %}
+
+{% if functions %}
+.. rubric:: Functions
+
+.. autosummary::
+   :toctree:
+{% for item in functions %}
+   {{ item }}
+{%- endfor %}
+{% endif %}
+
+{% if modules %}
+.. rubric:: Submodules
+
+.. autosummary::
+   :toctree:
+   :recursive:
+{% for item in modules %}
+   {{ item }}
+{%- endfor %}
+{% endif %}
