@@ -8,11 +8,11 @@ _templates_suffix: .jinja
 # Questions
 project_title:
     type: str
-    placeholder: "NLR's Modern Data Standards"
+    placeholder: "e.g., NLR's Modern Data Standards"
     help: What is your project title? This title will be used in places such as documentation and the README landing page. There are no restrictions on characters.
 project_name:
     type: str
-    placeholder: "NLR-Modern-Data"
+    placeholder: "e.g., NLR-Modern-Data"
     help: What is your project name? This is typically the name of the repository and the name registered on PyPI. You can use upper-case and hyphens, but don't use spaces or special characters.
 project_slug:
     type: str
@@ -24,23 +24,23 @@ project_slug:
     #     {% endif %}
 package_short_description:
     type: str
-    placeholder: "A short description of your package"
+    placeholder: "e.g., A short description of your package"
     help: What is your package short description?
 author_first_name:
     type: str
-    placeholder: "Guilherme"
+    placeholder: "e.g., Guilherme"
     help: What is your given (first) name?
 author_family_name:
     type: str
-    placeholder: "Castelão"
+    placeholder: "e.g., Castelão"
     help: What is your family (last) name?
 email:
     type: str
-    placeholder: "gpimenta@nlr.gov"
+    placeholder: "e.g., gpimenta@nlr.gov"
     help: What is your email address?
 orcid:
     type: str
-    placeholder: "0000-0002-6765-0708"
+    placeholder: "e.g., 0000-0002-6765-0708"
     help: What is your ORCID? (optional)
 repository:
     type: str
@@ -48,7 +48,7 @@ repository:
     help: What is the repository URL?
 github_username:
     type: str
-    placeholder: "castelao"
+    placeholder: "e.g., castelao"
     help: What is your GitHub username?
 requires_python:
     type: str
