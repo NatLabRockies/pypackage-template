@@ -102,6 +102,11 @@ for development (tests, linting, docs, etc.).
   `pixi run -e dev pytest -n auto` for heavier suites.
 
 ## 7. Logging & Observability
+- Use the standard `logging` module for all diagnostic output in library
+  code (`logger = logging.getLogger("{{ project_slug }}.")`); avoid use `print`.
+  Reserve `print`/`rich.console` for intentional user-facing CLI output only.
+- Do not configure logging handlers/levels inside library modules; leave
+  handler setup to the application/CLI entry point.
 - Exceptions in `{{ project_slug }}.exceptions` automatically emit log messages; keep
   error text concise and user-facing.
 - CLI commands should surface actionable messages and exit codes without
