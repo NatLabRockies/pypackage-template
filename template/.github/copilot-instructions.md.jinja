@@ -45,7 +45,7 @@ pixi run -e doc python-docs
 # Build distribution artifacts
 pixi run -e build build-wheels
 ```
-To add a new dependency, use `pixi add --pipy <package>`; this updates `pyproject.toml`
+To add a new dependency, use `pixi add --pypi <package>`; this updates `pyproject.toml`
 and the lockfile atomically. You will also have to run a subsequent command
 `pixi add <package>` to add the dependency to the conda environment.
 Use `pixi add --feature dev <package>` to add a dependency that is only used
