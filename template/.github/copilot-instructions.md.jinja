@@ -7,8 +7,10 @@
 - Environment management: **Pixi** environments (`default`, `dev`, `test`,
   `doc`, `build`). Always prefer Pixi over bare pip for dependency
   consistency.
-- Packaging/versioning: `setuptools_scm` (version in `src/{{ project_slug }}/_version.py`
-  generated dynamically by tags `vX.Y.Z`).
+- Packaging/versioning: **Hatchling** build backend with **hatch-vcs**
+  (version in `src/{{ project_slug }}/_version.py`,
+  generated dynamically from `vX.Y.Z` git tags; `hatch-vcs` uses
+  `setuptools_scm` internally).
 - Linting/Formatting: Ruff (configured in `pyproject.toml`). Line length 79
   (72 for docstrings). Ruff also runs format checks.
 - Testing: Pytest (unit-style and integration-style cases in `tests/`),
